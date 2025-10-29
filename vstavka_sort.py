@@ -19,9 +19,9 @@ for i in range(1, len(a)):
         operations += 2 
     else:
         operations += 1
-    
     a[j + 1] = start_value
     operations += 1
 
 print(f"Всего операций: {operations}")
+
 print(f"Проверка сортировки: {a == sorted(a)}")
