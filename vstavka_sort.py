@@ -19,7 +19,7 @@ def insert_sort(arr):
         if not inserted:
             temp.append(arr[i])
     
-    print(f"Insert Sort Operations: {comparision}")
+    print(f"Количество операций: {comparision}")
     return temp
 
 # Создаем массив
@@ -29,3 +29,4 @@ for i in range(0, 10000):
 
 sorted_arr = insert_sort(arr)
 print(f"Проверка сортировки: {sorted_arr == sorted(arr)}")
+
