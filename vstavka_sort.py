@@ -1,27 +1,31 @@
-#количество операций этим методом ~100.000.000
 import random
 
-a = []
-for i in range(0, 10000):
-    a.append(random.randint(1, 100000))
-
-operations = 0
-for i in range(1, len(a)):
-    start_value = a[i]
-    operations += 1
-    j = i - 1
-    while j >= 0 and a[j] > start_value:
-        operations += 3 
-        a[j + 1] = a[j]
-        j -= 1
-        operations += 1
-    if j >= 0:
-        operations += 2 
-    else:
-        operations += 1
+def insert_sort(arr):
+    if not arr:
+        raise ValueError("empty array")
     
-    a[j + 1] = start_value
-    operations += 1
+    comparision = 0
+    temp = []
+    temp.append(arr[0])
+    
+    for i in range(1, len(arr)):
+        inserted = False
+        for j in range(len(temp)):
+            comparision += 1
+            if arr[i] < temp[j]:
+                temp.insert(j, arr[i])
+                inserted = True
+                break
+        if not inserted:
+            temp.append(arr[i])
+    
+    print(f"Insert Sort Operations: {comparision}")
+    return temp
 
-print(f"Всего операций: {operations}")
-print(f"Проверка сортировки: {a == sorted(a)}")
+# Создаем массив
+arr = []
+for i in range(0, 10000):
+    arr.append(random.randint(1, 100000))
+
+sorted_arr = insert_sort(arr)
+print(f"Проверка сортировки: {sorted_arr == sorted(arr)}")
