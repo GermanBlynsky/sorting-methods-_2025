@@ -1,50 +1,50 @@
-#htpe
 import random
 
-operations = 0
+def quick_sort(arr, counter):
+    if not arr:
+        return arr, counter
+    
+    pivot = arr[-1]
+    arr = arr[:-1]
+    
+    lArr, counter = filter_arr(arr, pivot, True, counter)
+    rArr, counter = filter_arr(arr, pivot, False, counter)
+    
+    sorted_lArr, counter = quick_sort(lArr, counter)
+    sorted_rArr, counter = quick_sort(rArr, counter)
+    
+    result = combine(sorted_lArr, pivot, sorted_rArr)
+    return result, counter
 
-def quicksort_simple(arr, low, high):
-    global operations
-    if low < high:
-        operations += 1
-        
-        pi = partition_simple(arr, low, high)
-        
-        quicksort_simple(arr, low, pi - 1)
-        quicksort_simple(arr, pi + 1, high)
+def filter_arr(arr, pivot, left, counter):
+    part = []
+    if left:
+        for i in arr:
+            counter += 1
+            if i <= pivot:
+                part.append(i)
+    else:
+        for i in arr:
+            counter += 1
+            if i > pivot:
+                part.append(i)
+    return part, counter
 
-def partition_simple(arr, low, high):
-    global operations
-    pivot = arr[high]
-    operations += 1  
-    
-    i = low - 1
-    operations += 1  
-    
-    for j in range(low, high):
-        operations += 1 
-        
-        operations += 1  
-        if arr[j] <= pivot:
-            i += 1
-            operations += 1 
-            arr[i], arr[j] = arr[j], arr[i]
-            operations += 3
-    
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    operations += 3
-    
-    return i + 1
+def combine(lArr, pivot, rArr):
+    result = []
+    for i in lArr:
+        result.append(i)
+    result.append(pivot)
+    for i in rArr:
+        result.append(i)
+    return result
 
-a = []
+# Создаем массив
+arr = []
 for i in range(0, 10000):
-    a.append(random.randint(1, 100000))
+    arr.append(random.randint(1, 100000))
 
-a_copy = a.copy()
-
-operations = 0
-
-quicksort_simple(a, 0, len(a) - 1)
-
-print(f"Всего операций: {operations}")
-print(f"Проверка правильности сортировки (сравнением со встроенной сортировкой) : {a == sorted(a_copy)}")
+counter = 0
+sorted_arr, counter = quick_sort(arr, counter)
+print(f"Количесто операций: {counter}")
+print(f"Проверка сортировки: {sorted_arr == sorted(arr)}")
